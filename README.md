@@ -133,16 +133,42 @@ This does not yet confirm that the MySQL ODBC driver or its dependencies can be 
 1. Open the official [MySQL Connector/ODBC download page](https://dev.mysql.com/downloads/connector/odbc/).
 2. Download the Windows 64-bit MSI installer.
 3. Install the connector.
-4. Open **ODBC Data Sources (64-bit)** from the Windows Start menu.
-5. Open the **Drivers** tab and locate the installed MySQL Unicode driver.
 
-The driver name may look similar to:
+After installing MySQL Connector/ODBC, verify the installed driver names:
 
-`MySQL ODBC 26.7 Unicode Driver`
+1. Open the Windows Start menu.
+2. Search for **ODBC Data Sources (64-bit)** and open it.
+3. Select the **Drivers** tab.
+4. Find the installed **MySQL ODBC** drivers. Depending on the installation, you may see one or both of the following:
+   - `MySQL ODBC 26.7 ANSI Driver`
+   - `MySQL ODBC 26.7 Unicode Driver`
+5. Copy the exact driver name displayed on your system and use it in the Qt connection string.
 
-Use the exact registered name displayed on your computer.
+**ANSI vs. Unicode**
 
-The Unicode driver is recommended for applications that store Persian or other non-ASCII text. Correct database character-set configuration is also necessary.
+- **ANSI Driver:** Uses an ANSI-oriented character interface. Character conversion may depend on the Windows code page and application configuration, which can complicate handling Persian text.
+- **Unicode Driver:** Supports Unicode character handling and is generally the recommended option for applications that store Persian, Arabic, English, or other multilingual text.
+
+For this project, **prefer the Unicode driver**, especially for student names, family names, addresses, and other Persian-language data. The actual driver name may differ depending on the installed Connector/ODBC version.
+
+Example using the Unicode driver:
+
+```cpp
+QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
+
+db.setDatabaseName(
+    "DRIVER={MySQL ODBC 26.7 Unicode Driver};"
+    "SERVER=127.0.0.1;"
+    "PORT=3306;"
+    "DATABASE=school_db;"
+    "UID=school_app;"
+    "PWD=YOUR_PASSWORD;"
+);
+```
+
+If only the ANSI driver is installed, replace the driver name with the exact name shown in the **ODBC Data Sources (64-bit)** application.
+
+**Important:** Use the 64-bit ODBC administrator when working with a 64-bit Qt application. Also, configure the database and its tables to use `utf8mb4` so that MySQL can store Unicode text correctly.
 
 ## 4. Create the MySQL Database and User
 
@@ -381,17 +407,48 @@ int main(int argc, char *argv[])
 
 ۲. نصب‌کننده MSI ویندوز ۶۴ بیتی را دانلود و اجرا کنید.
 
-۳. از منوی Start ویندوز، برنامه **ODBC Data Sources (64-bit)** را باز کنید.
 
-۴. در تب `Drivers` نام دقیق درایور Unicode را پیدا کنید.
+پس از نصب MySQL Connector/ODBC، نام درایورهای نصب‌شده را بررسی کنید:
 
-برای نمونه:
+۱. منوی Start ویندوز را باز کنید.
 
-`MySQL ODBC 26.7 Unicode Driver`
+۲. عبارت **ODBC Data Sources (64-bit)** را جست‌وجو و اجرا کنید.
 
-نام موجود در سیستم شما ممکن است متفاوت باشد؛ همان نام ثبت‌شده را در رشته اتصال Qt وارد کنید.
+۳. وارد زبانه **Drivers** شوید.
 
-برای نرم‌افزاری که اطلاعات فارسی ذخیره می‌کند، درایور Unicode انتخاب مناسبی است. همچنین تنظیم صحیح مجموعه‌کاراکترهای دیتابیس ضروری است.
+۴. درایورهای MySQL نصب‌شده را پیدا کنید. بسته به نوع نصب، ممکن است یک یا هر دو مورد زیر را ببینیید:
+
+- `MySQL ODBC 26.7 ANSI Driver`
+- `MySQL ODBC 26.7 Unicode Driver`
+
+۵. نام دقیق درایور را از سیستم خودتان بردارید و در رشته اتصال Qt قرار دهید. شماره نسخه و نام ثبت‌شده ممکن است در سیستم‌های مختلف متفاوت باشد.
+
+**تفاوت درایورهای ANSI و Unicode**
+
+- **درایور ANSI:** از رابط کاراکتری مبتنی بر ANSI استفاده می‌کند. تبدیل کاراکترها ممکن است به کدپیج ویندوز و تنظیمات برنامه وابسته باشد؛ بنابراین مدیریت متن فارسی با آن می‌تواند پیچیده‌تر شود.
+- **درایور Unicode:** برای کار با متن‌های یونیکد طراحی شده و معمولاً انتخاب مناسب‌تری برای برنامه‌هایی است که اطلاعات فارسی، عربی، انگلیسی یا چندزبانه ذخیره می‌کنند.
+
+برای این برنامه، **درایور Unicode را پیشنهاد می‌کنیم**؛ چون قرار است نام و نام خانوادگی، نشانی‌ها و سایر اطلاعات فارسی به‌درستی ذخیره و بازیابی شوند.
+
+نمونه رشته اتصال با درایور Unicode:
+
+```cpp
+QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
+
+db.setDatabaseName(
+    "DRIVER={MySQL ODBC 26.7 Unicode Driver};"
+    "SERVER=127.0.0.1;"
+    "PORT=3306;"
+    "DATABASE=school_db;"
+    "UID=school_app;"
+    "PWD=YOUR_PASSWORD;"
+);
+```
+
+اگر فقط درایور ANSI نصب شده است، نام آن را دقیقاً مطابق چیزی که در بخش **ODBC Data Sources (64-bit)** نمایش داده می‌شود، جایگزین نام درایور Unicode کنید.
+
+**نکته مهم:** اگر برنامه Qt شما ۶۴ بیتی است، از ابزار مدیریت ODBC نسخه ۶۴ بیتی استفاده کنید. همچنین پایگاه داده و جدول‌های آن باید از مجموعه نویسه `utf8mb4` استفاده کنند تا متن‌های فارسی به‌درستی ذخیره شوند.
+
 
 ## ۴. ساخت دیتابیس و کاربر MySQL
 
