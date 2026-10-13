@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
         "PORT=3306;"
         "DATABASE=school_db;"
         "UID=school_app;"   //Username
-        "PWD=ChangeThis_StrongPassword;"    //Password
+        "PWD=ReplaceWithYourOwnStrongPassword;"    //Password
         );
 
     if (!db.open()) {
