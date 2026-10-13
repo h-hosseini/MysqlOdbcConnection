@@ -9,6 +9,7 @@ This guide also includes a small utility for listing available Qt SQL drivers an
 - [Overview](#overview)
 - [Tested Environment](#tested-environment)
 - [Requirements](#requirements)
+- [Getting Started](#getting-started)
 - [1. Enable Qt SQL in CMake](#1-enable-qt-sql-in-cmake)
 - [2. Check Available Qt SQL Drivers](#2-check-available-qt-sql-drivers)
 - [3. Install MySQL Connector/ODBC](#3-install-mysql-connectorodbc)
@@ -60,6 +61,58 @@ Downloads:
 - [MySQL Connector/ODBC](https://dev.mysql.com/downloads/connector/odbc/)
 - [MySQL Server](https://dev.mysql.com/downloads/mysql/)
 
+## Getting Started
+
+You can try this project in either of the following ways.
+
+### Option 1: Clone or Download the Repository
+
+1. Clone the repository using Git:
+
+   ```bash
+   git clone https://github.com/h-hosseini/MysqlOdbcConnection.git
+   ```
+
+   Alternatively, download the project as a ZIP file from GitHub and extract it.
+
+2. Open the project in Qt Creator by selecting the `CMakeLists.txt` file.
+
+3. Select a compatible Qt Kit, such as **Qt 6.6.0 MinGW 64-bit**.
+
+4. Configure and build the project.
+
+5. Run the application to see the available SQL drivers and check the database driver configuration.
+
+### Option 2: Create a New Console Application
+
+If you want to learn how the code works or test it in your own environment, you can create a new project in Qt Creator.
+
+1. Open Qt Creator and select **File → New Project**.
+2. Choose **Application (Qt) → Qt Console Application**. The exact menu names may vary by Qt Creator version.
+3. Enter a project name and choose a location.
+4. Select a CMake as the build system.
+5. Select a compatible Qt Kit, such as **Qt 6.6.0 MinGW 64-bit**.
+6. Configure the project to use the **Core** and **Sql** modules.
+7. Copy the source code from this repository into your new project's source file, such as `main.cpp`.
+8. Build and run the application.
+
+Make sure your `CMakeLists.txt` includes the Qt SQL module and links against it:
+
+```cmake
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Sql)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Sql)
+
+target_link_libraries(YourProjectName
+    PRIVATE
+        Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Sql
+)
+```
+
+Replace `YourProjectName` with the actual target name defined in your CMake project. In this case, we use **MysqlOdbcConnection**.
+
+**Note:** If you only want to list the available SQL drivers, you do not need a running MySQL server. To test a MySQL connection, you must also configure MySQL and install a compatible database driver, such as MySQL Connector/ODBC when using `QODBC`.
+
 ## 1. Enable Qt SQL in CMake
 
 Add the `Sql` component to `find_package()` and link the Qt SQL library.
@@ -69,7 +122,7 @@ Example `CMakeLists.txt`:
 ```cmake
 cmake_minimum_required(VERSION 3.16)
 
-project(AvailableSqlDrivers LANGUAGES CXX)
+project(MysqlOdbcConnection LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -82,11 +135,11 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED
     COMPONENTS Core Sql
 )
 
-add_executable(AvailableSqlDrivers
+add_executable(MysqlOdbcConnection
     main.cpp
 )
 
-target_link_libraries(AvailableSqlDrivers
+target_link_libraries(MysqlOdbcConnection
     PRIVATE
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Sql
@@ -352,6 +405,66 @@ For a school LAN, configure access only for trusted computers or the required lo
 - [دانلود MySQL Connector/ODBC](https://dev.mysql.com/downloads/connector/odbc/)
 - [دانلود MySQL Server](https://dev.mysql.com/downloads/mysql/)
 
+## شروع کار
+
+برای آزمایش و اجرای این پروژه، می‌توانی از یکی از دو روش زیر استفاده کنی.
+
+### روش اول: دریافت یا کلون کردن مخزن پروژه
+
+۱. با استفاده از Git، مخزن پروژه را کلون کن:
+
+```bash
+git clone https://github.com/h-hosseini/MysqlOdbcConnection.git
+```
+
+همچنین می‌توانی از صفحه GitHub پروژه، فایل ZIP را دانلود و از حالت فشرده خارج کنی.
+
+۲. در Qt Creator، فایل `CMakeLists.txt` پروژه را باز کن.
+
+۳. یک Qt Kit سازگار، مانند **Qt 6.6.0 MinGW 64-bit**، انتخاب کن.
+
+۴. مراحل پیکربندی و ساخت پروژه را انجام بده.
+
+۵. برنامه را اجرا کن تا درایورهای SQL موجود را مشاهده کنی و تنظیمات درایور پایگاه داده را بررسی کنی.
+
+### روش دوم: ساخت یک پروژه کنسولی جدید
+
+## پروژه کنسولی جدید
+
+اگر می‌خواهی کدها را شخصاً وارد کنی، با ساختار برنامه آشنا شوی یا آن را در محیط خودت آزمایش کنی، می‌توانی یک پروژه جدید در برنامه‌ی Qt Creator بسازی.
+
+۱. برنامه‌ی Qt Creator را باز کن و از منوی **File → New Project** وارد بخش ساخت پروژه جدید شو.
+
+۲. گزینه **Application (Qt) → Qt Console Application** را انتخاب کن. نام دقیق گزینه‌ها ممکن است با توجه به نسخه Qt Creator متفاوت باشد.
+
+۳. نام پروژه و مسیر ذخیره‌سازی آن را مشخص کن.
+
+۴. گزینه **CMake** را به‌عنوان Build System انتخاب کن.
+
+۵. یک Qt Kit سازگار با عنوان **Desktop Qt 6.6.0 MinGW 64-bit** انتخاب کن.
+
+۶. ماژول‌های **Core** و **Sql** را برای پروژه در نظر بگیر.
+
+۷. کد منبع موجود در این مخزن را در فایل متناظر پروژه جدید، مانند `main.cpp`، کپی کن.
+
+۸. پروژه را Build و سپس اجرا کن.
+مطمئن شو فایل `CMakeLists.txt` ماژول SQL را پیدا کرده و به پروژه متصل می‌کند:
+
+```cmake
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Sql)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Sql)
+
+target_link_libraries(YourProjectName
+    PRIVATE
+        Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Sql
+)
+```
+
+عبارت `YourProjectName` را با نام واقعی Target پروژه خودت جایگزین کن(در پروژه‌ی ما MysqlOdbcConnection).
+
+**نکته:** اگر فقط می‌خواهی فهرست درایورهای SQL موجود را مشاهده کنی، نیازی به اجرای سرور MySQL نداری. اما برای آزمایش اتصال به MySQL، باید سرور پایگاه داده را تنظیم کنی و درایور سازگار آن، مانند MySQL Connector/ODBC هنگام استفاده از `QODBC`، نصب شده باشد.
+
 ## ۱. اضافه کردن Qt SQL به پروژه
 
 در فایل `CMakeLists.txt` باید مؤلفه `Sql` را به `find_package()` اضافه کنیم و کتابخانه مربوط به آن را به پروژه پیوند دهیم.
@@ -367,7 +480,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED
     COMPONENTS Core Sql
 )
 
-target_link_libraries(AvailableSqlDrivers
+target_link_libraries(MysqlOdbcConnection
     PRIVATE
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Sql
