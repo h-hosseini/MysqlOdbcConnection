@@ -65,7 +65,7 @@ Downloads:
 
 You can try this project in either of the following ways.
 
-### Option 1: Clone or Download the Repository
+#### Option 1: Clone or Download the Repository
 
 1. Clone the repository using Git:
 
@@ -83,7 +83,7 @@ You can try this project in either of the following ways.
 
 5. Run the application to see the available SQL drivers and check the database driver configuration.
 
-### Option 2: Create a New Console Application
+#### Option 2: Create a New Console Application
 
 If you want to learn how the code works or test it in your own environment, you can create a new project in Qt Creator.
 
@@ -409,7 +409,7 @@ For a school LAN, configure access only for trusted computers or the required lo
 
 برای آزمایش و اجرای این پروژه، می‌توانی از یکی از دو روش زیر استفاده کنی.
 
-### روش اول: دریافت یا کلون کردن مخزن پروژه
+#### روش اول: دریافت یا کلون کردن مخزن پروژه
 
 ۱. با استفاده از Git، مخزن پروژه را کلون کن:
 
@@ -427,9 +427,7 @@ git clone https://github.com/h-hosseini/MysqlOdbcConnection.git
 
 ۵. برنامه را اجرا کن تا درایورهای SQL موجود را مشاهده کنی و تنظیمات درایور پایگاه داده را بررسی کنی.
 
-### روش دوم: ساخت یک پروژه کنسولی جدید
-
-## پروژه کنسولی جدید
+#### روش دوم: ساخت یک پروژه کنسولی جدید
 
 اگر می‌خواهی کدها را شخصاً وارد کنی، با ساختار برنامه آشنا شوی یا آن را در محیط خودت آزمایش کنی، می‌توانی یک پروژه جدید در برنامه‌ی Qt Creator بسازی.
 
